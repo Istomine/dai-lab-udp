@@ -21,7 +21,7 @@ public class Main {
     final static Map<String,String> instruments = new HashMap<>();
 
 
-    private Main(){
+    private static void initMap(){
         instruments.put("piano","ti-ta-ti");
         instruments.put("trumpet","pouet");
         instruments.put("flute","trulu");
@@ -33,6 +33,8 @@ public class Main {
 
 
     public static void main(String[] args) {
+
+        initMap();
 
         try(DatagramSocket socket = new DatagramSocket()){
 
