@@ -8,17 +8,31 @@ enum Instrument{
     piano, trumpet, flute, violin, drum
 }
 
-public record Musician(UUID uuid, Instrument instrument, long lastActivity) {
+public class Musician {
     private static final HashMap<String, Instrument> instrumentsSound = new HashMap<>(){{
         put("ti-ta-ti", Instrument.piano);
-        put("pouetflute", Instrument.trumpet);
+        put("pouet", Instrument.trumpet);
         put("trulu", Instrument.flute);
         put("gzi-gzi", Instrument.violin);
         put("boum-boum", Instrument.drum);
     }};
 
-    public Musician(UUID uuid, String sound, long lastActivity){
-        this(uuid, instrumentsSound.get(sound), lastActivity);
+
+    private Instrument instrument;
+
+    private UUID uuid;
+
+    private long lastActivity;
+
+
+    public Musician(String sound,UUID uuid,long lastActivity){
+        this.instrument = instrumentsSound.get(sound);
+        this.uuid = uuid;
+        this.lastActivity =lastActivity;
+    }
+
+    public long getLastActivity() {
+        return lastActivity;
     }
 
     @Override
@@ -29,6 +43,6 @@ public record Musician(UUID uuid, Instrument instrument, long lastActivity) {
     @Override
     public boolean equals(Object o) {
         if(!(o instanceof Musician)){return  false;}
-        return this.hashCode() == o.hashCode();
+        return ((Musician)o).uuid == uuid && ((Musician)o).instrument == instrument ;
     }
 }

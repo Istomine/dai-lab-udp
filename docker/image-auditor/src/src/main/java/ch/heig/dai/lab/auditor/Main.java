@@ -56,7 +56,7 @@ public class Main {
                 while (!Thread.interrupted()){
                     try(Socket socket = serverSocket.accept();
                         var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),StandardCharsets.UTF_8))){
-                        orchestra.removeIf(musician-> System.currentTimeMillis() - musician.lastActivity() >= TIMEOUT_MILI);
+                        orchestra.removeIf(musician-> System.currentTimeMillis() - musician.getLastActivity() >= TIMEOUT_MILI);
                         String response = new GsonBuilder().create().toJson(orchestra);
                         out.write(response);
                         out.flush();
