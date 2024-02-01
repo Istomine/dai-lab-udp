@@ -17,32 +17,43 @@ public class Musician {
         put("boum-boum", Instrument.drum);
     }};
 
-
-    private Instrument instrument;
-
     private UUID uuid;
-
+    private Instrument instrument;
     private long lastActivity;
 
-
-    public Musician(String sound,UUID uuid,long lastActivity){
-        this.instrument = instrumentsSound.get(sound);
+    public Musician(String sound,UUID uuid){
         this.uuid = uuid;
-        this.lastActivity =lastActivity;
+        this.instrument = instrumentsSound.get(sound);
+        this.lastActivity = System.currentTimeMillis();
     }
 
-    public long getLastActivity() {
-        return lastActivity;
+    public void setActivity(){
+        lastActivity = System.currentTimeMillis();
     }
+
+    public long lastActivity(){return lastActivity;}
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, instrument);
+        return Objects.hash(uuid);
     }
 
+    /**
+     * Check if two musicians are equal.
+     *
+     * @param other the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false otherwise.
+     */
     @Override
-    public boolean equals(Object o) {
-        if(!(o instanceof Musician)){return  false;}
-        return ((Musician)o).uuid == uuid && ((Musician)o).instrument == instrument ;
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        } else if (other == null) {
+            return false;
+        } else if (!(other instanceof Musician)) {
+            return false;
+        }
+        Musician musician = (Musician) other;
+        return musician.uuid.equals(this.uuid);
     }
 }
